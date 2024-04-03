@@ -31,6 +31,31 @@ head(av)
 
 Get the data into a format where the five columns for Death[1-5] are replaced by two columns: Time, and Death. Time should be a number between 1 and 5 (look into the function `parse_number`); Death is a categorical variables with values "yes", "no" and "". Call the resulting data set `deaths`. 
 
+```{r}
+library(dplyr)
+library(tidyverse)
+
+av_deaths <- av %>%
+  gather(key = "Time", value = "Death", starts_with("Death")) %>%
+  mutate(Time = as.integer(gsub("Death", "", Time)), 
+         Death = case_when(
+           Death == "YES" ~ "yes",
+           Death == "NO" ~ "no",
+           TRUE ~ "" # Handle other cases, assuming missing data as empty string
+         ))
+
+deaths_per_avenger <- av_deaths %>%
+  filter(Death == "yes") %>%
+  group_by(Name.Alias) %>%
+  summarize(Deaths = n())
+
+average_deaths <- mean(deaths_per_avenger$Deaths)
+average_deaths
+
+
+```
+
+
 Similarly, deal with the returns of characters.
 
 Based on these datasets calculate the average number of deaths an Avenger suffers. 
