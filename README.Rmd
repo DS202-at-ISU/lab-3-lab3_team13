@@ -104,4 +104,53 @@ Make sure to include the code to derive the (numeric) fact for the statement
 ### Include your answer (Nicholas Olech)
 
 Based on my analysis, this statistic appears to be misleading, likely due to a discrepancy between the date the article was published and when the data set was updated. Instead of a death occurring 7 months, like the article stated, it appears to happen just once every ~9 months. Also the permanent death occurs only once every ~28 months which is also different from the articles statistic of 20.
+
+
+### FiveThirtyEight Statement (Carter Parks)
+
+> There’s a 2-in-3 chance that a member of the Avengers returned from their first stint in the afterlife, but only a 50 percent chance they recovered from a second or third death.8
+
+### Include the code (Carter Parks)
+
+```{r}
+death1Return <- av %>%
+  filter(Death1 == 'YES', Return1 == 'YES') %>%
+  nrow()
+
+death1Dead <- av %>%
+  filter(Death1 == 'YES', Return1 == 'NO') %>%
+  nrow()
+
+death1Total <- death1Return + death1Dead
+
+death2Return <- av %>%
+  filter(Death2 == 'YES', Return2 == 'YES') %>%
+  nrow()
+
+death2Dead <- av %>%
+  filter(Death2 == 'YES', Return2 == 'NO') %>%
+  nrow()
+
+death2Total <- death2Return + death2Dead
+
+death3Return <- av %>%
+  filter(Death2 == 'YES', Return2 == 'YES') %>%
+  nrow()
+
+death3Dead <- av %>%
+  filter(Death2 == 'YES', Return2 == 'NO') %>%
+  nrow()
+
+death3Total <- death3Return + death3Dead
+
+print(paste("Percentage returning from death 1:", death1Return / death1Total))
+print(paste("Percentage returning from death 2:", death2Return / death2Total))
+print(paste("Percentage returning from death 3:", death3Return / death3Total))
+
+```
+Make sure to include the code to derive the (numeric) fact for the statement
+
+### Include your answer (Carter Parks)
+Exactly 2/3s of avengers came back from their first death, while only 50% of avengers came back from their 2nd and 3rd deaths.
+
 Upload your changes to the repository. Discuss and refine answers as a team.
